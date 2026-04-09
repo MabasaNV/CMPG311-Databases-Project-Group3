@@ -19,5 +19,5 @@ Objectives
 How to Use
 1. Clone the repository:
    ```bash
-   git clone https://github.com//Cmpg311-Database-Project.git
+   git clone https://github.com/MabasaNV/Cmpg311-Database-Project.git
 

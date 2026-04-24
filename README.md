@@ -9,7 +9,7 @@ The system allows users to browse, list, and manage rental properties efficientl
 
  Project Phases
 - Phase 1→ System description and requirements documentation (`CMPG 311_Phase1 final (Updated).pdf`)
-- Phase 2 → Database Design ('CMPG311_Phase 2 Final(2).pdf')
+- Phase 2 → Database Design ('CMPG 311_Phase 2 Final(2).pdf')
 - Phase 3 → SQL scripts for database creation and implementation
 Objectives
 - Define system requirements and database needs.

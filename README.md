@@ -11,11 +11,7 @@ The system allows users to browse, list, and manage rental properties efficientl
 - Phase 1→ System description and requirements documentation (`CMPG 311_Phase1 final (Updated).pdf`)
 - Phase 2 → Database Design ('CMPG 311_Phase 2 Final(2).pdf')
 - Phase 3 → SQL scripts for database creation and implementation
-Objectives
-- Define system requirements and database needs.
-- Design a clear ERD to represent relationships between entities.
-- Implement the database using SQL scripts.
-
+Objectives.
 How to Use
 1. Clone the repository:
    ```bash

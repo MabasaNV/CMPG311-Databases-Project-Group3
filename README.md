@@ -8,12 +8,13 @@ This project is a Property Rental Listing Website with a working database.
 The system allows users to browse, list, and manage rental properties efficiently.
 
  Project Phases
-- Phase 1→ System description and requirements documentation (`CMPG 311_Phase1 final (Updated).pdf`)
-- Phase 2 → Database Design (`CMPG 311_Phase 2 Final(2).pdf`)
+- Phase 1→ System description and requirements documentation - Phase 2/`CMPG 311_Phase1 final (Updated).pdf`
+- Phase 2 → Database Design - Phase 2/`CMPG 311_Phase 2 Final(2).pdf`
 - Phase 3 → SQL scripts for database creation and implementation
 Objectives.
 How to Use
 1. Clone the repository:
+   
    ```bash
    git clone https://github.com/MabasaNV/Cmpg311-Database-Project.git
 

@@ -2,32 +2,24 @@
    KeySpace Real Estate — style.css  (enhanced edition)
    CMPG 311 Group 3 - NWU 2026
    --------------------------------------------------------------
-   Notes for the team:
-   - All original class names are preserved, so no HTML changes
-     are required. Drop this file in place of the old one.
-   - Background photos load from Unsplash (free, no API key).
-     If your school network blocks Unsplash, swap the URLs in
-     the :root --img-* variables for any local /static/ image.
-   - Designed to stay professional (navy + gold brand palette)
-     while feeling modern and friendly.
-============================================================ */
+
 
 /* Modern brand font (KeySpace wordmark) + clean UI font */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 /* ── VARIABLES ── */
 :root {
-  /* SA-inspired palette: deep ocean navy + warm savanna amber + sage */
-  --primary:     #0B2545;   /* deep Atlantic blue */
+  
+  --primary:     #0B2545;   
   --primary-dk:  #061629;
-  --primary-lt:  #1B4965;   /* False Bay teal-blue */
-  --accent:      #F4A261;   /* Karoo / savanna amber */
+  --primary-lt:  #1B4965;   
+  --accent:      #F4A261; 
   --accent-dk:   #E08A3C;
   --accent-lt:   #F6BD60;
-  --success:     #2A9D8F;   /* fynbos teal */
+  --success:     #2A9D8F;   
   --danger:      #E63946;
   --info:        #2A9D8F;
-  --bg:          #F5F1EA;   /* warm sand / linen */
+  --bg:          #F5F1EA;   
   --card:        #FFFFFF;
   --border:      #E6DFD3;
   --text:        #14213D;
@@ -76,7 +68,7 @@ body {
   line-height: 1.6;
   min-height: 100vh;
 
-  /* Soft, blurred SA-coast backdrop on every page */
+  /* Background image */
   background:
     linear-gradient(180deg, rgba(245,241,234,0.93) 0%, rgba(245,241,234,0.97) 100%),
     var(--img-body) center/cover fixed no-repeat;

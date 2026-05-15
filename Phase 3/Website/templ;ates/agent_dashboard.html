@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}— My Dashboard{% endblock %}
+{% block content %}
+
+<div class="dash-header">
+  <div>
+    <h1>My Dashboard</h1>
+    <p class="dash-sub">Welcome, {{ session.client_name }} &nbsp;|&nbsp;
+      <span class="role-pill">{{ session.client_type }}</span>
+    </p>
+  </div>
+  <a href="{{ url_for('index') }}" class="btn-primary">Browse Properties</a>
+</div>
+
+<!-- SAVED PROPERTIES -->
+<div class="dash-section">
+  <h2>Saved Properties
+    <span class="count-badge">{{ saved|length }}</span>
+  </h2>
+
+  {% if saved %}
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>City</th>
+          <th>Type</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Saved On</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in saved %}
+        <tr>
+          <td class="td-title">{{ s['Title'] }}</td>
+          <td>{{ s['City'] }}</td>
+          <td>{{ s['PropertyType'] }}</td>
+          <td>R{{ "{:,.0f}".format(s['Price']) }}</td>
+          <td>
+            <span class="status-badge status-{{ s['Status']|lower }}">
+              {{ s['Status'] }}
+            </span>
+          </td>
+          <td>{{ s['SavedDate'] }}</td>
+          <td>
+            <a href="{{ url_for('property_detail', property_id=s['PropertyID']) }}"
+               class="btn-sm btn-primary">View</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-note">
+    You haven't saved any properties yet.
+    <a href="{{ url_for('index') }}">Browse properties</a> and click Save.
+  </div>
+  {% endif %}
+</div>
+
+<!-- MY INQUIRIES -->
+<div class="dash-section">
+  <h2>My Inquiries
+    <span class="count-badge">{{ inquiries|length }}</span>
+  </h2>
+
+  {% if inquiries %}
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Agent</th>
+          <th>Contact</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in inquiries %}
+        <tr>
+          <td class="td-title">{{ i['Title'] }}</td>
+          <td>{{ i['InquiryType'] }}</td>
+          <td>{{ i['InquiryDate'] }}</td>
+          <td>
+            <span class="status-badge status-{{ i['Status']|lower|replace(' ','-') }}">
+              {{ i['Status'] }}
+            </span>
+          </td>
+          <td>{{ i['AgentName'] }}</td>
+          <td>{{ i['ContactNumber'] }}</td>
+          <td class="td-notes">{{ i['Notes'] or '—' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-note">
+    No inquiries yet.
+    <a href="{{ url_for('index') }}">Browse properties</a> and request a viewing.
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

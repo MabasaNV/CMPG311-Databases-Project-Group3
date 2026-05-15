@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}— Search Properties{% endblock %}
+
+{% block content %}
+<div class="page-header"><h1>Search Properties</h1></div>
+
+<form class="search-form" method="GET" action="{{ url_for('search') }}">
+  <div class="filter-row">
+    <div class="filter-group">
+      <label>City</label>
+      <input type="text" name="city" placeholder="e.g. Mafikeng" value="{{ city }}"/>
+    </div>
+    <div class="filter-group">
+      <label>Property Type</label>
+      <select name="type">
+        <option value="">All Types</option>
+        {% for t in types %}
+          <option value="{{ t }}" {% if t == ptype %}selected{% endif %}>{{ t }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Max Price (R)</label>
+      <input type="number" name="max_price" placeholder="e.g. 1000000" value="{{ max_price }}"/>
+    </div>
+    <div class="filter-group">
+      <label>Min Bedrooms</label>
+      <select name="bedrooms">
+        <option value="">Any</option>
+        {% for b in [1,2,3,4,5] %}
+          <option value="{{ b }}" {% if bedrooms == b|string %}selected{% endif %}>
+            {{ b }}+
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn-primary">Search</button>
+    <a href="{{ url_for('search') }}" class="btn-outline">Clear</a>
+  </div>
+</form>
+
+{% if results %}
+  <p class="results-info">
+    {{ results|length }} propert{{ 'y' if results|length == 1 else 'ies' }} found
+  </p>
+  <div class="property-grid">
+    {% for p in results %}
+    <div class="property-card">
+      <div class="card-badge">{{ p['PropertyType'] }}</div>
+      <div class="card-body">
+        <h3 class="card-title">{{ p['Title'] }}</h3>
+        <p class="card-location">📍 {{ p['Street'] }}, {{ p['City'] }}, {{ p['Province'] }}</p>
+        <div class="card-stats">
+          <span class="stat-pill">💰 R{{ "{:,.0f}".format(p['Price']) }}</span>
+          {% if p['Bedrooms'] > 0 %}<span class="stat-pill">🛏 {{ p['Bedrooms'] }}</span>{% endif %}
+          {% if p['Bathrooms'] > 0 %}<span class="stat-pill">🚿 {{ p['Bathrooms'] }}</span>{% endif %}
+          <span class="stat-pill">📐 {{ p['Size_sqm'] }}m²</span>
+        </div>
+        <p class="card-agent">Agent: {{ p['AgentName'] }}</p>
+      </div>
+      <div class="card-footer">
+        <a href="{{ url_for('property_detail', property_id=p['PropertyID']) }}"
+           class="btn-primary btn-sm">View Details</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+{% elif request.args %}
+  <div class="empty-state">
+    <p>No properties match your filters. Try adjusting your search.</p>
+    <a href="{{ url_for('search') }}" class="btn-outline">Clear filters</a>
+  </div>
+{% endif %}
+
+{% endblock %}

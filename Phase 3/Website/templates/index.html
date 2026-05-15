@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}— Find Your Property{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Find Your Next Property</h1>
+  <p>Browse listings from trusted KeySpace agents across South Africa</p>
+  <div class="hero-actions">
+    <a href="{{ url_for('search') }}" class="btn-primary btn-lg">Search Properties</a>
+    {% if not session.get('client_id') and not session.get('agent_id') %}
+      <a href="{{ url_for('register') }}" class="btn-outline btn-lg">Create Account</a>
+    {% endif %}
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat"><strong>{{ properties|length }}</strong> Available</div>
+  <div class="stat"><strong>9</strong> Agents</div>
+  <div class="stat"><strong>5</strong> Locations</div>
+  <div class="stat"><strong>5</strong> Property Types</div>
+</div>
+
+<!-- LISTINGS -->
+<div class="section-header">
+  <h2>Available Properties</h2>
+</div>
+
+{% if properties %}
+<div class="property-grid">
+  {% for p in properties %}
+  <div class="property-card">
+
+    <div class="card-badge">{{ p['PropertyType'] }}</div>
+
+    <div class="card-body">
+      <h3 class="card-title">{{ p['Title'] }}</h3>
+      <p class="card-location">📍 {{ p['Street'] }}, {{ p['City'] }}, {{ p['Province'] }}</p>
+
+      <div class="card-stats">
+        <span class="stat-pill">
+          💰
+          {% if p['Price'] > 50000 %}
+            R{{ "{:,.0f}".format(p['Price']) }}
+          {% else %}
+            R{{ "{:,.0f}".format(p['Price']) }}/mo
+          {% endif %}
+        </span>
+        {% if p['Bedrooms'] > 0 %}
+          <span class="stat-pill">🛏 {{ p['Bedrooms'] }}</span>
+        {% endif %}
+        {% if p['Bathrooms'] > 0 %}
+          <span class="stat-pill">🚿 {{ p['Bathrooms'] }}</span>
+        {% endif %}
+        <span class="stat-pill">📐 {{ p['Size_sqm'] }}m²</span>
+      </div>
+
+      <p class="card-agent">Agent: {{ p['AgentName'] }}</p>
+    </div>
+
+    <div class="card-footer">
+      <a href="{{ url_for('property_detail', property_id=p['PropertyID']) }}"
+         class="btn-primary btn-sm">View Details</a>
+      {% if session.get('client_id') %}
+        <a href="{{ url_for('save_property', property_id=p['PropertyID']) }}"
+           class="btn-outline btn-sm">♡ Save</a>
+      {% endif %}
+    </div>
+
+  </div>
+  {% endfor %}
+</div>
+
+{% else %}
+<div class="empty-state">
+  <p>No properties available right now. Check back soon!</p>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}— Client Login{% endblock %}
+{% block content %}
+<div class="form-page">
+  <div class="form-card">
+    <h1>Welcome Back</h1>
+    <p class="form-sub">Enter your email to access your dashboard</p>
+
+    <form method="POST">
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" name="email" required placeholder="you@email.com" autofocus/>
+      </div>
+      <button type="submit" class="btn-primary full-w">Log In</button>
+    </form>
+
+    <p class="form-footer">
+      New to KeySpace? <a href="{{ url_for('register') }}">Create an account</a>
+    </p>
+    <p class="form-footer">
+      Are you an agent? <a href="{{ url_for('agent_login') }}">Agent login</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}— Submit Inquiry{% endblock %}
+{% block content %}
+<div class="form-page">
+  <div class="form-card">
+    <h1>Submit an Inquiry</h1>
+    {% if prop %}
+      <p class="form-sub">
+        Property: <strong>{{ prop['Title'] }}</strong><br>
+        Agent: {{ prop['AgentName'] }}
+      </p>
+    {% endif %}
+
+    <form method="POST">
+      <div class="form-group">
+        <label>Inquiry Type *</label>
+        <select name="inquiry_type" required>
+          <option value="Viewing">📅 Request a Viewing</option>
+          <option value="General">💬 General Inquiry</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Message / Notes</label>
+        <textarea name="notes" rows="5"
+                  placeholder="Any questions, preferred viewing times, or additional info..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary full-w">Submit Inquiry</button>
+      <a href="javascript:history.back()"
+         class="btn-outline full-w" style="margin-top:8px">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

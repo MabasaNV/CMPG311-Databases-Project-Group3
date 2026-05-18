@@ -1,76 +1,115 @@
 {% extends "base.html" %}
-{% block title %}— Search Properties{% endblock %}
+{% block title %}— {{ prop['Title'] }}{% endblock %}
 
 {% block content %}
-<div class="page-header"><h1>Search Properties</h1></div>
+<div class="detail-page">
 
-<form class="search-form" method="GET" action="{{ url_for('search') }}">
-  <div class="filter-row">
-    <div class="filter-group">
-      <label>City</label>
-      <input type="text" name="city" placeholder="e.g. Mafikeng" value="{{ city }}"/>
-    </div>
-    <div class="filter-group">
-      <label>Property Type</label>
-      <select name="type">
-        <option value="">All Types</option>
-        {% for t in types %}
-          <option value="{{ t }}" {% if t == ptype %}selected{% endif %}>{{ t }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="filter-group">
-      <label>Max Price (R)</label>
-      <input type="number" name="max_price" placeholder="e.g. 1000000" value="{{ max_price }}"/>
-    </div>
-    <div class="filter-group">
-      <label>Min Bedrooms</label>
-      <select name="bedrooms">
-        <option value="">Any</option>
-        {% for b in [1,2,3,4,5] %}
-          <option value="{{ b }}" {% if bedrooms == b|string %}selected{% endif %}>
-            {{ b }}+
-          </option>
-        {% endfor %}
-      </select>
-    </div>
-    <button type="submit" class="btn-primary">Search</button>
-    <a href="{{ url_for('search') }}" class="btn-outline">Clear</a>
+  <!-- Back button -->
+  <div class="detail-back">
+    <a href="{{ url_for('index') }}" class="btn-outline btn-sm">← Back to Listings</a>
   </div>
-</form>
 
-{% if results %}
-  <p class="results-info">
-    {{ results|length }} propert{{ 'y' if results|length == 1 else 'ies' }} found
-  </p>
-  <div class="property-grid">
-    {% for p in results %}
-    <div class="property-card">
-      <div class="card-badge">{{ p['PropertyType'] }}</div>
-      <div class="card-body">
-        <h3 class="card-title">{{ p['Title'] }}</h3>
-        <p class="card-location">📍 {{ p['Street'] }}, {{ p['City'] }}, {{ p['Province'] }}</p>
-        <div class="card-stats">
-          <span class="stat-pill">💰 R{{ "{:,.0f}".format(p['Price']) }}</span>
-          {% if p['Bedrooms'] > 0 %}<span class="stat-pill">🛏 {{ p['Bedrooms'] }}</span>{% endif %}
-          {% if p['Bathrooms'] > 0 %}<span class="stat-pill">🚿 {{ p['Bathrooms'] }}</span>{% endif %}
-          <span class="stat-pill">📐 {{ p['Size_sqm'] }}m²</span>
-        </div>
-        <p class="card-agent">Agent: {{ p['AgentName'] }}</p>
+  <!-- Property header -->
+  <div class="detail-header">
+    <div class="detail-badge">{{ prop['PropertyType'] }}</div>
+    <h1 class="detail-title">{{ prop['Title'] }}</h1>
+    <p class="detail-location">
+      📍 {{ prop['Street'] }}, {{ prop['City'] }}, {{ prop['Province'] }}
+      {% if prop['PostalCode'] %} · {{ prop['PostalCode'] }}{% endif %}
+    </p>
+    <div class="detail-status {{ 'status-available' if prop['Status'] == 'Available' else 'status-other' }}">
+      {{ prop['Status'] }}
+    </div>
+  </div>
+
+  <!-- Key stats -->
+  <div class="detail-stats">
+    <div class="stat-box">
+      <span class="stat-icon">💰</span>
+      <span class="stat-value">R{{ "{:,.0f}".format(prop['Price']) }}</span>
+      <span class="stat-label">Price</span>
+    </div>
+    {% if prop['Bedrooms'] and prop['Bedrooms'] > 0 %}
+    <div class="stat-box">
+      <span class="stat-icon">🛏</span>
+      <span class="stat-value">{{ prop['Bedrooms'] }}</span>
+      <span class="stat-label">Bedrooms</span>
+    </div>
+    {% endif %}
+    {% if prop['Bathrooms'] and prop['Bathrooms'] > 0 %}
+    <div class="stat-box">
+      <span class="stat-icon">🚿</span>
+      <span class="stat-value">{{ prop['Bathrooms'] }}</span>
+      <span class="stat-label">Bathrooms</span>
+    </div>
+    {% endif %}
+    <div class="stat-box">
+      <span class="stat-icon">📐</span>
+      <span class="stat-value">{{ prop['Size_sqm'] }}m²</span>
+      <span class="stat-label">Size</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-icon">📅</span>
+      <span class="stat-value">{{ prop['ListingDate'] }}</span>
+      <span class="stat-label">Listed</span>
+    </div>
+  </div>
+
+  <!-- Features -->
+  {% if features %}
+  <div class="detail-section">
+    <h2>Features</h2>
+    <div class="features-list">
+      {% for feature in features %}
+        <span class="feature-tag">✓ {{ feature }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Agent info -->
+  <div class="detail-section">
+    <h2>Listed By</h2>
+    <div class="agent-card">
+      <div class="agent-icon">👤</div>
+      <div class="agent-info">
+        <p class="agent-name">{{ prop['AgentName'] }}</p>
+        {% if prop['ContactNumber'] %}
+          <p class="agent-contact">📞 {{ prop['ContactNumber'] }}</p>
+        {% endif %}
+        {% if prop['Email'] %}
+          <p class="agent-contact">✉️ {{ prop['Email'] }}</p>
+        {% endif %}
       </div>
-      <div class="card-footer">
-        <a href="{{ url_for('property_detail', property_id=p['PropertyID']) }}"
-           class="btn-primary btn-sm">View Details</a>
-      </div>
     </div>
-    {% endfor %}
   </div>
 
-{% elif request.args %}
-  <div class="empty-state">
-    <p>No properties match your filters. Try adjusting your search.</p>
-    <a href="{{ url_for('search') }}" class="btn-outline">Clear filters</a>
-  </div>
-{% endif %}
+  <!-- Action buttons -->
+  <div class="detail-actions">
 
+    {% if session.get('client_id') %}
+      <!-- Save property -->
+      <a href="{{ url_for('save_property', property_id=prop['PropertyID']) }}"
+         class="btn-outline">🔖 Save Property</a>
+
+      <!-- Submit inquiry -->
+      {% if prop['Status'] == 'Available' %}
+        <a href="{{ url_for('submit_inquiry', property_id=prop['PropertyID']) }}"
+           class="btn-primary">📩 Submit Inquiry</a>
+      {% endif %}
+
+    {% else %}
+      <!-- Not logged in — prompt to login -->
+      <div class="login-prompt">
+        <p>
+          <a href="{{ url_for('client_login') }}">Log in</a> or
+          <a href="{{ url_for('register') }}">register</a>
+          to save this property or submit an inquiry.
+        </p>
+      </div>
+    {% endif %}
+
+  </div>
+
+</div>
 {% endblock %}

@@ -26,7 +26,9 @@
           <select name="property_type_id" required>
             <option value="">Select type...</option>
             {% for t in prop_types %}
-              <option value="{{ t['PropertyTypeID'] }}">{{ t['TypeName'] }}</option>
+              <option value="{{ t['propertytypeid'] or t['propertytypeid'] }}">
+                {{ t['typename'] or t['typename'] }}
+              </option>
             {% endfor %}
           </select>
         </div>
@@ -35,7 +37,9 @@
           <select name="location_id" required>
             <option value="">Select location...</option>
             {% for l in locations %}
-              <option value="{{ l['LocationID'] }}">{{ l['City'] }}, {{ l['Province'] }}</option>
+              <option value="{{ l['locationid'] or l['locationid'] }}">
+                {{ l['city'] or l['city'] }}, {{ l['province'] or l['province'] }}
+              </option>
             {% endfor %}
           </select>
         </div>

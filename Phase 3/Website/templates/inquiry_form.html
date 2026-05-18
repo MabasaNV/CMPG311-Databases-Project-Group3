@@ -6,8 +6,8 @@
     <h1>Submit an Inquiry</h1>
     {% if prop %}
       <p class="form-sub">
-        Property: <strong>{{ prop['Title'] }}</strong><br>
-        Agent: {{ prop['AgentName'] }}
+        Property: <strong>{{ prop['title'] or prop['Title'] }}</strong><br>
+        Agent: {{ prop['agentname'] or prop['AgentName'] }}
       </p>
     {% endif %}
 

@@ -46,20 +46,20 @@
   <div class="property-grid">
     {% for p in results %}
     <div class="property-card">
-      <div class="card-badge">{{ p['PropertyType'] }}</div>
+      <div class="card-badge">{{ p['propertytype'] }}</div>
       <div class="card-body">
-        <h3 class="card-title">{{ p['Title'] }}</h3>
-        <p class="card-location">📍 {{ p['Street'] }}, {{ p['City'] }}, {{ p['Province'] }}</p>
+        <h3 class="card-title">{{ p['title'] }}</h3>
+        <p class="card-location">📍 {{ p['street'] }}, {{ p['city'] }}, {{ p['province'] }}</p>
         <div class="card-stats">
-          <span class="stat-pill">💰 R{{ "{:,.0f}".format(p['Price']) }}</span>
-          {% if p['Bedrooms'] > 0 %}<span class="stat-pill">🛏 {{ p['Bedrooms'] }}</span>{% endif %}
-          {% if p['Bathrooms'] > 0 %}<span class="stat-pill">🚿 {{ p['Bathrooms'] }}</span>{% endif %}
-          <span class="stat-pill">📐 {{ p['Size_sqm'] }}m²</span>
+          <span class="stat-pill">💰 R{{ "{:,.0f}".format(p['price']) }}</span>
+          {% if p['bedrooms'] > 0 %}<span class="stat-pill">🛏 {{ p['bedrooms'] }}</span>{% endif %}
+          {% if p['bathrooms'] > 0 %}<span class="stat-pill">🚿 {{ p['bathrooms'] }}</span>{% endif %}
+          <span class="stat-pill">📐 {{ p['size_sqm'] }}m²</span>
         </div>
-        <p class="card-agent">Agent: {{ p['AgentName'] }}</p>
+        <p class="card-agent">Agent: {{ p['agentname'] }}</p>
       </div>
       <div class="card-footer">
-        <a href="{{ url_for('property_detail', property_id=p['PropertyID']) }}"
+        <a href="{{ url_for('property_detail', property_id=p['propertyid']) }}"
            class="btn-primary btn-sm">View Details</a>
       </div>
     </div>

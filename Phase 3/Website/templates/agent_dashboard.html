@@ -35,18 +35,18 @@
       <tbody>
         {% for s in saved %}
         <tr>
-          <td class="td-title">{{ s['Title'] }}</td>
-          <td>{{ s['City'] }}</td>
-          <td>{{ s['PropertyType'] }}</td>
-          <td>R{{ "{:,.0f}".format(s['Price']) }}</td>
+          <td class="td-title">{{ s['title'] }}</td>
+          <td>{{ s['city'] }}</td>
+          <td>{{ s['propertytype'] }}</td>
+          <td>R{{ "{:,.0f}".format(s['price']) }}</td>
           <td>
-            <span class="status-badge status-{{ s['Status']|lower }}">
-              {{ s['Status'] }}
+            <span class="status-badge status-{{ s['status']|lower }}">
+              {{ s['status'] }}
             </span>
           </td>
-          <td>{{ s['SavedDate'] }}</td>
+          <td>{{ s['saveddate'] }}</td>
           <td>
-            <a href="{{ url_for('property_detail', property_id=s['PropertyID']) }}"
+            <a href="{{ url_for('property_detail', property_id=s['propertyid']) }}"
                class="btn-sm btn-primary">View</a>
           </td>
         </tr>
@@ -85,17 +85,17 @@
       <tbody>
         {% for i in inquiries %}
         <tr>
-          <td class="td-title">{{ i['Title'] }}</td>
-          <td>{{ i['InquiryType'] }}</td>
-          <td>{{ i['InquiryDate'] }}</td>
+          <td class="td-title">{{ i['title'] }}</td>
+          <td>{{ i['inquirytype'] }}</td>
+          <td>{{ i['inquirydate'] }}</td>
           <td>
-            <span class="status-badge status-{{ i['Status']|lower|replace(' ','-') }}">
-              {{ i['Status'] }}
+            <span class="status-badge status-{{ i['status']|lower|replace(' ','-') }}">
+              {{ i['status'] }}
             </span>
           </td>
-          <td>{{ i['AgentName'] }}</td>
-          <td>{{ i['ContactNumber'] }}</td>
-          <td class="td-notes">{{ i['Notes'] or '—' }}</td>
+          <td>{{ i['agentname'] }}</td>
+          <td>{{ i['contactnumber'] }}</td>
+          <td class="td-notes">{{ i['notes'] or '—' }}</td>
         </tr>
         {% endfor %}
       </tbody>
